@@ -1,19 +1,21 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
-@immutable
-abstract class EmployeeAbstract extends Equatable {
+class Employee {
   int id;
   String name;
   double salery;
-
-  EmployeeAbstract(this.id, this.name, this.salery, [List props = const []])
-      : super([id, name, salery]..addAll(props));
+  Employee(this.id, this.name, this.salery);
 }
 
-class Employee extends EmployeeAbstract {
-  Employee(int id, String name, double salery) : super(id, name, salery);
+abstract class EmployeeState extends Equatable {
+  EmployeeState([List props = const []]) : super(props);
 
   @override
-  String toString() => '';
+  String toString() => '$runtimeType{}';
+}
+
+class EmployeeLoaded extends EmployeeState {
+  EmployeeLoaded(this.employees) : super([employees]);
+
+  final List<Employee> employees;
 }

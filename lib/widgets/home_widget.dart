@@ -23,7 +23,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         appBar: AppBar(
           title: Text('Employee'),
         ),
-        body: BlocBuilder<EmployeeEvent, List<Employee>>(
+        body: BlocBuilder<EmployeeEvent, EmployeeState>(
           bloc: employeeBloc,
           builder: (context, snapshot) {
             return this.buildEmployeeListView(snapshot, employeeBloc);
@@ -32,9 +32,9 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 
   ListView buildEmployeeListView(
-      List<Employee> snapshot, EmployeeBloc employeeBloc) {
+      EmployeeState snapshot, EmployeeBloc employeeBloc) {
     return ListView.builder(
-      itemCount: snapshot.length,
+      itemCount: (snapshot as EmployeeLoaded).employees.length,
       itemBuilder: (context, index) {
         return Card(
           elevation: 5.0,
@@ -44,7 +44,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               Container(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
-                  '${snapshot[index].id}',
+                  '${(snapshot as EmployeeLoaded).employees[index].id}',
                   style: TextStyle(fontSize: 20.0),
                 ),
               ),
@@ -54,11 +54,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      '${snapshot[index].name}',
+                      '${(snapshot as EmployeeLoaded).employees[index].name}',
                       style: TextStyle(fontSize: 18.0),
                     ),
                     Text(
-                      '₹ ${snapshot[index].salery}',
+                      '₹ ${(snapshot as EmployeeLoaded).employees[index].salery}',
                       style: TextStyle(fontSize: 16.0),
                     ),
                   ],
