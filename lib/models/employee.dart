@@ -4,18 +4,15 @@ class Employee {
   int id;
   String name;
   double salery;
-  Employee(this.id, this.name, this.salery);
-}
 
-abstract class EmployeeState extends Equatable {
-  EmployeeState([List props = const []]) : super(props);
+  Employee(this.id, this.name, this.salery);
+
+  static Employee copyWith(Employee employee) {
+    return Employee(employee.id, employee.name, employee.salery);
+  }
 
   @override
-  String toString() => '$runtimeType{}';
-}
-
-class EmployeeLoaded extends EmployeeState {
-  EmployeeLoaded(this.employees) : super([employees]);
-
-  final List<Employee> employees;
+  String toString() {
+    return 'Employee { id: $id, name: $name, salery: $salery }';
+  }
 }

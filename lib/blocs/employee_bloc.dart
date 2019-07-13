@@ -18,29 +18,33 @@ class DecrementEvent extends EmployeeEvent {
   DecrementEvent(int index) : super(index);
 }
 
-class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
+class EmployeeBloc extends Bloc<EmployeeEvent, List<Employee>> {
   @override
-  EmployeeState get initialState => EmployeeLoaded([
+  List<Employee> get initialState => [
         Employee(1, 'Employee One', 10000.0),
         Employee(2, 'Employee Two', 10000.0),
         Employee(3, 'Employee Three', 10000.0),
         Employee(4, 'Employee Four', 10000.0),
         Employee(5, 'Employee Five', 10000.0),
-      ]);
+      ];
 
   @override
-  Stream<EmployeeState> mapEventToState(EmployeeEvent event) async* {
-    double currentSalery =
-        (currentState as EmployeeLoaded).employees[event.index].salery;
-
+  Stream<List<Employee>> mapEventToState(EmployeeEvent event) async* {
     if (event is IncrementEvent) {
-      (currentState as EmployeeLoaded).employees[event.index].salery =
-          currentSalery + (currentSalery * 0.2);
+      yield this.updateList(event);
     } else if (event is DecrementEvent) {
-      (currentState as EmployeeLoaded).employees[event.index].salery =
-          currentSalery - (currentSalery * 0.2);
+      yield this.updateList(event);
     }
+  }
 
-    yield currentState;
+  List<Employee> updateList(EmployeeEvent event) {
+    List<Employee> newState =
+        currentState.map((employee) => Employee.copyWith(employee)).toList();
+    final currentSalery = newState[event.index].salery;
+
+    newState[event.index].salery = (event is IncrementEvent)
+        ? (currentSalery + 2000.0)
+        : (currentSalery - 2000.0);
+    return newState;
   }
 }
