@@ -30,11 +30,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, List<Employee>> {
 
   @override
   Stream<List<Employee>> mapEventToState(EmployeeEvent event) async* {
-    if (event is IncrementEvent) {
-      yield this.updateList(event);
-    } else if (event is DecrementEvent) {
-      yield this.updateList(event);
-    }
+    yield this.updateList(event);
   }
 
   List<Employee> updateList(EmployeeEvent event) {
