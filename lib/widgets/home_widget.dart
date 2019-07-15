@@ -1,4 +1,6 @@
-import 'package:bloc_pattern_demo/blocs/employee_bloc.dart';
+import 'package:bloc_pattern_demo/blocs/employee/employee_state.dart';
+
+import '../blocs/employee/employees.dart';
 import 'package:bloc_pattern_demo/models/employee.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,24 +11,18 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  EmployeeBloc employeeBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    employeeBloc = EmployeeBloc();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final EmployeeBloc employeeBloc = BlocProvider.of<EmployeeBloc>(context);
     return Scaffold(
         appBar: AppBar(
           title: Text('Employee'),
         ),
-        body: BlocBuilder<EmployeeEvent, List<Employee>>(
+        body: BlocBuilder<EmployeeEvent, EmployeeState>(
           bloc: employeeBloc,
           builder: (context, snapshot) {
-            return this.buildEmployeeListView(snapshot, employeeBloc);
+            return this.buildEmployeeListView(
+                (snapshot as EmployeeLoaded).employee, employeeBloc);
           },
         ));
   }
