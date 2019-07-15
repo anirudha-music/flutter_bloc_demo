@@ -11,6 +11,6 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
         builder: (BuildContext context) => EmployeeBloc(),
         child:
-            MaterialApp(debugShowCheckedModeBanner: false, home: HomeWidget()));
+            MaterialApp(debugShowCheckedModeBanner: false, home: HomeScreen()));
   }
 }

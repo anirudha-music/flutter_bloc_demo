@@ -19,15 +19,15 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   }
 
   Stream<EmployeeState> updateList(EmployeeEvent event) async* {
-    List<Employee> employeeUpdate = (currentState as EmployeeLoaded)
-        .employee
-        .map((employee) => employee.copyWith(employee))
-        .toList();
-    final currentSalery = employeeUpdate[event.index].salery;
+    final id = (currentState as EmployeeLoaded).employee[event.index].id;
 
-    employeeUpdate[event.index].salery = (event is IncrementEvent)
-        ? (currentSalery + 2000.0)
-        : (currentSalery - 2000.0);
+    List<Employee> employeeUpdate =
+        (currentState as EmployeeLoaded).employee.map((employee) {
+      if (employee.id == id) {
+        employee.salery += 200.0;
+      }
+      return employee;
+    }).toList();
 
     yield EmployeeLoaded(employeeUpdate);
   }

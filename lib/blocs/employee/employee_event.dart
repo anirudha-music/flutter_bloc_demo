@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 @immutable
 abstract class EmployeeEvent extends Equatable {
   final int _index;
-  EmployeeEvent(this._index) : super([_index]);
+  EmployeeEvent(this._index, [List props = const []]) : super([props, _index]);
 
   int get index => this._index;
 }
