@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:quiver/core.dart';
 
 class Employee extends Equatable {
   int id;
@@ -15,4 +16,14 @@ class Employee extends Equatable {
   String toString() {
     return 'Employee { id: $id, name: $name, salery: $salery }';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      other is Employee &&
+      this.id == other.id &&
+      this.name == other.name &&
+      this.salery == other.salery;
+
+  @override
+  int get hashCode => hash3(id, name, salery);
 }

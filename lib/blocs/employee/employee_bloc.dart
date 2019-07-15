@@ -29,6 +29,9 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       return employee;
     }).toList();
 
+    print((currentState as EmployeeLoaded).employee == employeeUpdate);
+    print(currentState == EmployeeLoaded(employeeUpdate));
+
     yield EmployeeLoaded(employeeUpdate);
   }
 }
