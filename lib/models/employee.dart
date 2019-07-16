@@ -8,22 +8,15 @@ class Employee extends Equatable {
 
   Employee(this.id, this.name, this.salery) : super([id, name, salery]);
 
-  Employee copyWith(Employee employee) {
-    return Employee(employee.id, employee.name, employee.salery);
+  Employee copyWith({
+    String name,
+    double salery,
+  }) {
+    return Employee(this.id, name ?? this.name, salery ?? this.salery);
   }
 
   @override
   String toString() {
     return 'Employee { id: $id, name: $name, salery: $salery }';
   }
-
-  @override
-  bool operator ==(Object other) =>
-      other is Employee &&
-      this.id == other.id &&
-      this.name == other.name &&
-      this.salery == other.salery;
-
-  @override
-  int get hashCode => hash3(id, name, salery);
 }

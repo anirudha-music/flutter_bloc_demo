@@ -24,7 +24,10 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     List<Employee> employeeUpdate =
         (currentState as EmployeeLoaded).employee.map((employee) {
       if (employee.id == id) {
-        employee.salery += 200.0;
+        return employee.copyWith(
+            salery: (event is IncrementEvent)
+                ? employee.salery + 200
+                : employee.salery - 200);
       }
       return employee;
     }).toList();
